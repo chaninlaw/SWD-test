@@ -1,0 +1,37 @@
+.controller {
+  display: flex;
+}
+
+.move-position {
+  display: flex;
+  width: 300px;
+  height: 100px;
+}
+
+.prev {
+  width: 100px;
+  height: 100px;
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+  background-color: gray;
+}
+
+.forward {
+  width: 100px;
+  height: 100px;
+  clip-path: polygon(100% 50%, 0 0, 0 100%);
+  background-color: gray;
+}
+
+.up {
+  width: 100px;
+  height: 100px;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  background-color: gray;
+}
+
+.down {
+  width: 100px;
+  height: 100px;
+  clip-path: polygon(100% 0, 0 0, 50% 100%);
+  background-color: gray;
+}
