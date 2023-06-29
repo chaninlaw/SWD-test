@@ -1,12 +1,14 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import type { MenuProps } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Space, Typography } from "antd";
+import { Button, Dropdown, Space, Typography, Layout } from "antd";
 
 import Home from "./pages/Home";
 import LayoutPage from "./pages/LayoutPage";
 import FormPage from "./pages/FormPage";
+
+const { Header, Content } = Layout;
 
 const items: MenuProps["items"] = [
   {
@@ -22,7 +24,7 @@ const items: MenuProps["items"] = [
 const App: React.FC = () => {
   return (
     <>
-      <header className="header">
+      <Header className="header" style={{ background: "transparent" }}>
         <Dropdown
           className="inter-dropdown"
           menu={{
@@ -38,15 +40,20 @@ const App: React.FC = () => {
             </Space>
           </Typography.Link>
         </Dropdown>
-      </header>
+        <Link to="/">
+          <Button size="large" type="default">
+            Home
+          </Button>
+        </Link>
+      </Header>
 
-      <main>
+      <Content>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/layout" element={<LayoutPage />} />
           <Route path="/form" element={<FormPage />} />
         </Routes>
-      </main>
+      </Content>
     </>
   );
 };
