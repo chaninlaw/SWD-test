@@ -1,1 +1,26 @@
 # swd-test
+
+## Start project
+
+- Open a project:
+`npm run dev`
+
+## Checklist
+
+1. Frontend (React)
+
+ใช้ Typescript 
+- [ ] สร้างตัวเปลี่ยนภาษา ด้วย i18next
+- [x] จัด Layout ของปุ่มด้วย Antd Design
+- [x] สร้างรูปทรงต่าง ๆ ของปุ่มด้วย CSS (ถ้าใช้ SCSS จะพิจารณาเป็นพิเศษ)
+-  แต่ละปุ่มสามารถจัดการหน้าเว็บได้ดังนี้
+    - [x] Move Shape ให้เลื่อนรูปทรงด้านล่างโดนหมุนไปทางซ้าย
+    - [x] Move Position ให้สลับ Grid Layout ขึ้นลง
+    - [x] เมื่อคลิกที่ปุ่มรูปทรงต่าง ๆ ด้านล่างให้ทำการสุ่มตำแหน่งใหม่ 
+ 
+
+2. สร้าง SPA (single page application) ด้วย Ant Design เก็บข้อมูลบุคคล (ตามไฟล์ภาพ) โดย
+
+- [ ] จัดการข้อมูลทั้ง Create, Edit และ Delete ลงบน Local Storage (เมื่อ Refesh หน้าเว็บไซต์ข้อมูลต้องไม่หายไป)
+- [ ] ใช้ Redux-toolkit จัดการข้อมูลของฟอร์ม แทน useState
+- [x] ตารางต้องมี Pagination, sorting และสามารถเลือกลบตามแต่ละรายการได้
