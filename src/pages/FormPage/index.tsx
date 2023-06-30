@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Form,
@@ -9,20 +9,53 @@ import {
   Space,
   Radio,
 } from "antd";
+import TableForm, { DataType } from "../../components/TableForm";
 
-type Props = {};
+const testData = [
+  {
+    key: 99,
+    firstName: "Chanin",
+    gender: "Male",
+    phone: "0635032466",
+    nation: "Thai",
+  },
+  {
+    key: 92,
+    firstName: "Ahanin",
+    gender: "Female",
+    phone: "0933157152",
+    nation: "Chinese",
+  },
+  {
+    key: 84,
+    firstName: "Zhanin",
+    gender: "Male",
+    phone: "0884660984",
+    nation: "American",
+  },
+];
 
-const FormPage: React.FC<Props> = () => {
+const FormPage: React.FC = () => {
+  const [submissions, setSubmissions] = useState<DataType[]>([...testData]);
+  const [counter, setCounter] = useState(1);
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
+  const onFinish = (values: DataType) => {
+    const submission = {
+      ...values,
+      key: counter,
+    };
+    setSubmissions([...submissions, submission]);
+    setCounter(counter + 1);
+    console.log(submissions);
+    form.resetFields();
   };
 
   return (
     <div className="container">
       <h1>Form & Table</h1>
       <Form
+        key={Math.random()}
         form={form}
         name="register"
         onFinish={onFinish}
@@ -70,11 +103,7 @@ const FormPage: React.FC<Props> = () => {
             <Select.Option value="Thai">Thai</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item
-          name="idCard"
-          label="Identification ID"
-          rules={[{ required: true }]}
-        >
+        <Form.Item name="idCard" label="Identification ID">
           <InputNumber
             controls={false}
             max={9999999999999}
@@ -91,9 +120,9 @@ const FormPage: React.FC<Props> = () => {
 
         <Form.Item label="Phone">
           <Space.Compact>
-            <Form.Item name="tel" noStyle rules={[{ required: true }]}>
+            <Form.Item name="phoneCode" noStyle rules={[{ required: true }]}>
               <Select style={{ width: "50%" }}>
-                <Select.Option value="66">+66</Select.Option>
+                <Select.Option value="0">+66</Select.Option>
               </Select>
             </Form.Item>
             <Form.Item name="phone" noStyle rules={[{ required: true }]}>
@@ -121,6 +150,10 @@ const FormPage: React.FC<Props> = () => {
           Submit
         </Button>
       </Form>
+
+      <Space>
+        <TableForm dataSource={submissions} />
+      </Space>
     </div>
   );
 };

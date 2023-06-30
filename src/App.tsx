@@ -1,8 +1,8 @@
 import "./App.css";
+import { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import type { MenuProps } from "antd";
-import { DownOutlined } from "@ant-design/icons";
-import { Button, Dropdown, Space, Typography, Layout } from "antd";
+import { Button, Space, Layout, Select } from "antd";
+import { useTranslation } from "react-i18next";
 
 import Home from "./pages/Home";
 import LayoutPage from "./pages/LayoutPage";
@@ -10,39 +10,38 @@ import FormPage from "./pages/FormPage";
 
 const { Header, Content } = Layout;
 
-const items: MenuProps["items"] = [
-  {
-    label: "EN",
-    key: "1",
-  },
-  {
-    label: "TH",
-    key: "2",
-  },
-];
+const langs = [{ shortName: "en" }, { shortName: "th" }];
 
 const App: React.FC = () => {
+  const [lang, setLang] = useState(langs[0].shortName.toUpperCase());
+  const { i18n, t } = useTranslation();
+
+  const handleLanguageChange = () => {
+    i18n.changeLanguage(lang);
+    console.log(lang);
+  };
+
   return (
     <>
       <Header className="header" style={{ background: "transparent" }}>
-        <Dropdown
-          className="inter-dropdown"
-          menu={{
-            items,
-            selectable: true,
-            defaultSelectedKeys: ["1"],
-          }}
-        >
-          <Typography.Link>
-            <Space>
-              EN
-              <DownOutlined />
-            </Space>
-          </Typography.Link>
-        </Dropdown>
+        <Space direction="horizontal">
+          <Select
+            value={lang}
+            onChange={(value) => {
+              setLang(() => value);
+            }}
+            onSelect={() => {
+              handleLanguageChange();
+            }}
+            options={langs.map((lang) => ({
+              label: lang.shortName.toUpperCase(),
+              value: lang.shortName.toUpperCase(),
+            }))}
+          ></Select>
+        </Space>
         <Link to="/">
           <Button size="large" type="default">
-            Home
+            {t("home")}
           </Button>
         </Link>
       </Header>

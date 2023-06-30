@@ -21,7 +21,6 @@ const Home: React.FC = () => {
           title="Test 2"
           bordered={false}
           style={{ width: 300 }}
-          onClick={() => console.log("Click!")}
         >
           <p>Form & Table</p>
         </Card>
