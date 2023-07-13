@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Table, Typography, Popconfirm, Form } from "antd";
+import { Table, Typography, Popconfirm, Form, Space } from "antd";
 import type { ColumnsType } from "antd/es/table";
 
 export interface DataType {
@@ -87,7 +87,7 @@ const TableForm: React.FC<Props> = ({ dataSource }) => {
   ];
 
   return (
-    <Form form={form} component={false}>
+    <Form form={form} style={{ width: "90vw" }}>
       <Table
         columns={columns}
         dataSource={dataSource}
@@ -101,8 +101,7 @@ const TableForm: React.FC<Props> = ({ dataSource }) => {
             console.log({ record });
           },
         }}
-        style={{ minWidth: "1100px" }}
-      ></Table>
+      />
     </Form>
   );
 };

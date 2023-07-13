@@ -16,9 +16,9 @@ const App: React.FC = () => {
   const [lang, setLang] = useState(langs[0].shortName.toUpperCase());
   const { i18n, t } = useTranslation();
 
-  const handleLanguageChange = () => {
-    i18n.changeLanguage(lang);
-    console.log(lang);
+  const handleLanguageChange = (value: string) => {
+    i18n.changeLanguage(value);
+    console.log(value);
   };
 
   return (
@@ -27,12 +27,8 @@ const App: React.FC = () => {
         <Space direction="horizontal">
           <Select
             value={lang}
-            onChange={(value) => {
-              setLang(() => value);
-            }}
-            onSelect={() => {
-              handleLanguageChange();
-            }}
+            onChange={(value) => setLang(value)}
+            onSelect={(value) => handleLanguageChange(value)}
             options={langs.map((lang) => ({
               label: lang.shortName.toUpperCase(),
               value: lang.shortName.toUpperCase(),

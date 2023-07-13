@@ -1,15 +1,7 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Form,
-  Input,
-  Select,
-  DatePicker,
-  InputNumber,
-  Space,
-  Radio,
-} from "antd";
 import TableForm, { DataType } from "../../components/TableForm";
+import { Button, Form, Space } from "antd";
+import * as InputForm from "../../components/InputForm";
 
 const testData = [
   {
@@ -37,124 +29,67 @@ const testData = [
 
 const FormPage: React.FC = () => {
   const [submissions, setSubmissions] = useState<DataType[]>([...testData]);
-  const [counter, setCounter] = useState(1);
   const [form] = Form.useForm();
 
   const onFinish = (values: DataType) => {
     const submission = {
       ...values,
-      key: counter,
+      key: Math.random(),
     };
     setSubmissions([...submissions, submission]);
-    setCounter(counter + 1);
-    console.log(submissions);
     form.resetFields();
   };
 
   return (
-    <div className="container">
+    <Space direction="vertical" size="middle" style={{ display: "flex" }}>
       <h1>Form & Table</h1>
-      <Form
-        key={Math.random()}
-        form={form}
-        name="register"
-        onFinish={onFinish}
-        layout="inline"
+      <Space
         style={{
-          border: "2px solid gray",
-          padding: "20px",
-          borderRadius: "20px",
-          gap: "20px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "0 20px",
         }}
       >
-        <Form.Item name="title" label="Title" rules={[{ required: true }]}>
-          <Select placeholder="title" allowClear>
-            <Select.Option value="male">Mr.</Select.Option>
-            <Select.Option value="female">Mrs.</Select.Option>
-            <Select.Option value="other">Miss</Select.Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-          name="firstName"
-          label="First Name"
-          rules={[{ required: true }]}
+        <Form
+          form={form}
+          name="register"
+          onFinish={onFinish}
+          layout="inline"
+          style={{
+            border: "2px solid gray",
+            padding: "20px",
+            borderRadius: "20px",
+            gap: "20px",
+          }}
         >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="lastName"
-          label="Last Name"
-          rules={[{ required: true }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item name="birth" label="Birth Date" rules={[{ required: true }]}>
-          <DatePicker />
-        </Form.Item>
-        <Form.Item
-          name="nation"
-          label="Nationality"
-          rules={[{ required: true }]}
-        >
-          <Select placeholder="- - Option - -" allowClear>
-            <Select.Option value="American">American</Select.Option>
-            <Select.Option value="Chinese">Chinese</Select.Option>
-            <Select.Option value="Thai">Thai</Select.Option>
-          </Select>
-        </Form.Item>
-        <Form.Item name="idCard" label="Identification ID">
-          <InputNumber
-            controls={false}
-            max={9999999999999}
-            style={{ width: "190px" }}
-          />
-        </Form.Item>
-        <Form.Item name="gender" label="Gender" rules={[{ required: true }]}>
-          <Radio.Group>
-            <Radio value="Male"> Male </Radio>
-            <Radio value="Female"> Female </Radio>
-            <Radio value="Prefer not to say">Prefer not to say</Radio>
-          </Radio.Group>
-        </Form.Item>
-
-        <Form.Item label="Phone">
-          <Space.Compact>
-            <Form.Item name="phoneCode" noStyle rules={[{ required: true }]}>
-              <Select style={{ width: "50%" }}>
-                <Select.Option value="0">+66</Select.Option>
-              </Select>
-            </Form.Item>
-            <Form.Item name="phone" noStyle rules={[{ required: true }]}>
-              <Input style={{ width: "100%" }} />
-            </Form.Item>
-          </Space.Compact>
-        </Form.Item>
-
-        <Form.Item name="passportId" label="Passport ID">
-          <InputNumber controls={false} max={9999999999999} />
-        </Form.Item>
-
-        <Form.Item
-          name="salary"
-          label="Expected Salary"
-          rules={[{ required: true }]}
-        >
-          <InputNumber controls={false} max={99999999} />
-        </Form.Item>
-
-        <Button type="default" htmlType="reset">
-          Reset
-        </Button>
-        <Button type="default" htmlType="submit">
-          Submit
-        </Button>
-      </Form>
-
-      <Space>
+          <InputForm.TitleInput />
+          <InputForm.FirstNameInput />
+          <InputForm.LastNameInput />
+          <InputForm.BirthDatePicker />
+          <InputForm.NationaInput />
+          <InputForm.GenderRadio />
+          <InputForm.PhoneInput />
+          <InputForm.PassportInput />
+          <InputForm.SalaryInput />
+          <Space>
+            <Button htmlType="reset">Reset</Button>
+            <Button htmlType="submit">Submit</Button>
+          </Space>
+        </Form>
+      </Space>
+      <Space
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "20px 0 0 0",
+        }}
+      >
         <TableForm dataSource={submissions} />
       </Space>
-    </div>
+    </Space>
   );
 };
 
