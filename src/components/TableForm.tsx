@@ -1,18 +1,19 @@
 import { useState } from "react";
-import { Table, Typography, Popconfirm, Form, Space } from "antd";
+import { Table, Typography, Popconfirm, Form } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import { t } from "i18next";
 
 export interface DataType {
   key: React.Key;
-  title?: string;
+  title: string;
   firstName: string;
-  lastName?: string;
+  lastName: string;
   birth?: string;
   nation: string;
   idCard?: string;
   gender: string;
-  tel?: string;
-  phone: string;
+  phoneCode?: string;
+  phoneNumber: string;
   passportId?: string;
   salary?: number;
 }
@@ -30,35 +31,38 @@ const TableForm: React.FC<Props> = ({ dataSource }) => {
 
   const columns: ColumnsType<DataType> = [
     {
-      key: "1",
-      title: "Name",
-      dataIndex: "firstName",
+      key: "name",
+      title: t("name"),
+      dataIndex: ["firstName", "lastName"],
+      render: (_, { firstName, lastName }) => (
+        <Typography>{`${firstName} ${lastName}`}</Typography>
+      ),
       sorter: (a, b) => a.firstName.localeCompare(b.firstName),
       editable: true,
     },
     {
-      key: "2",
-      title: "Gender",
+      key: "gender",
+      title: t("gender"),
       dataIndex: "gender",
       sorter: (a, b) => a.gender.localeCompare(b.gender),
       editable: true,
     },
     {
-      key: "3",
-      title: "Phone number",
-      dataIndex: "phone",
+      key: "phoneNumber",
+      title: t("phoneNumber"),
+      dataIndex: "phoneNumber",
       sorter: (a, b) => a.phone.localeCompare(b.phone),
       editable: true,
     },
     {
-      key: "4",
-      title: "Nationality",
+      key: "nation",
+      title: t("nation"),
       dataIndex: "nation",
       sorter: (a, b) => a.nation.localeCompare(b.nation),
       editable: true,
     },
     {
-      title: "Operation",
+      title: t("operation"),
       dataIndex: "operation",
       render: (_: any, record: Item) => {
         const editable = isEditing(record);

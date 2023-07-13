@@ -1,8 +1,14 @@
 import { Form, Input } from "antd";
+import { t } from "i18next";
 
-const FirstNameInput = () => {
+const FirstNameInput: React.FC = () => {
   return (
-    <Form.Item name="firstName" label="First Name" rules={[{ required: true }]}>
+    <Form.Item
+      label={t("firstName")}
+      name={"firstName"}
+      rules={[{ required: true, message: `${t("firstName")} is require` }]}
+      required
+    >
       <Input />
     </Form.Item>
   );

@@ -1,9 +1,10 @@
 import { DatePicker, Form } from "antd";
+import { t } from "i18next";
 
-const BirthDatePicker = () => {
+const BirthDatePicker: React.FC = () => {
   return (
-    <Form.Item name="birth" label="Birth Date" rules={[{ required: true }]}>
-      <DatePicker />
+    <Form.Item name="birth" label={t("birthDate")} rules={[{ required: true }]}>
+      <DatePicker placeholder={t("selectDate")} />
     </Form.Item>
   );
 };

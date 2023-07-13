@@ -1,28 +1,35 @@
 import React, { useState } from "react";
-import TableForm, { DataType } from "../../components/TableForm";
-import { Button, Form, Space } from "antd";
-import * as InputForm from "../../components/InputForm";
+import TableForm, { DataType } from "../components/TableForm";
+import { Button, Form, Space, Typography } from "antd";
+import * as InputForm from "../components/InputForm";
+import { t } from "i18next";
 
 const testData = [
   {
     key: 99,
+    title: "Mrs.",
     firstName: "Chanin",
+    lastName: "Law",
     gender: "Male",
-    phone: "0635032466",
+    phoneNumber: "0635032466",
     nation: "Thai",
   },
   {
     key: 92,
+    title: "Mrs.",
     firstName: "Ahanin",
+    lastName: "Law",
     gender: "Female",
-    phone: "0933157152",
+    phoneNumber: "0933157152",
     nation: "Chinese",
   },
   {
     key: 84,
+    title: "Mrs.",
     firstName: "Zhanin",
+    lastName: "Law",
     gender: "Male",
-    phone: "0884660984",
+    phoneNumber: "0884660984",
     nation: "American",
   },
 ];
@@ -32,61 +39,52 @@ const FormPage: React.FC = () => {
   const [form] = Form.useForm();
 
   const onFinish = (values: DataType) => {
+    console.log(values);
+
     const submission = {
       ...values,
       key: Math.random(),
     };
     setSubmissions([...submissions, submission]);
-    form.resetFields();
+    // form.resetFields();
   };
 
   return (
-    <Space direction="vertical" size="middle" style={{ display: "flex" }}>
-      <h1>Form & Table</h1>
-      <Space
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "0 20px",
-        }}
-      >
+    <Space direction="vertical">
+      <Typography.Title style={{ textAlign: "start" }}>
+        {t("formAndTable")}
+      </Typography.Title>
+      <Space direction="vertical" align="center" style={{ width: "100%" }}>
         <Form
+          layout="inline"
+          labelWrap
           form={form}
           name="register"
           onFinish={onFinish}
-          layout="inline"
           style={{
             border: "2px solid gray",
-            padding: "20px",
-            borderRadius: "20px",
-            gap: "20px",
+            padding: 20,
+            borderRadius: 20,
+            gap: 20,
           }}
         >
           <InputForm.TitleInput />
           <InputForm.FirstNameInput />
           <InputForm.LastNameInput />
           <InputForm.BirthDatePicker />
-          <InputForm.NationaInput />
+          <InputForm.NationalInput />
+          <InputForm.IdCardInput />
           <InputForm.GenderRadio />
           <InputForm.PhoneInput />
           <InputForm.PassportInput />
           <InputForm.SalaryInput />
-          <Space>
-            <Button htmlType="reset">Reset</Button>
-            <Button htmlType="submit">Submit</Button>
-          </Space>
+
+          <Form.Item>
+            <Button htmlType="reset">{t("resetButton")}</Button>
+            <Button htmlType="submit">{t("submitButton")}</Button>
+          </Form.Item>
         </Form>
-      </Space>
-      <Space
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          margin: "20px 0 0 0",
-        }}
-      >
+
         <TableForm dataSource={submissions} />
       </Space>
     </Space>

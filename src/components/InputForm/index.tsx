@@ -2,7 +2,8 @@ import TitleInput from "./TitleInput";
 import FirstNameInput from "./FirstNameInput";
 import LastNameInput from "./LastNameInput";
 import BirthDatePicker from "./BirthDatePicker";
-import NationaInput from "./NationaInput";
+import NationalInput from "./NationalInput";
+import IdCardInput from "./IdCardInput";
 import GenderRadio from "./GenderRadio";
 import PhoneInput from "./PhoneInput";
 import PassportInput from "./PassportInput";
@@ -13,9 +14,10 @@ export {
   FirstNameInput,
   LastNameInput,
   BirthDatePicker,
-  NationaInput,
+  NationalInput,
   GenderRadio,
   PhoneInput,
   PassportInput,
   SalaryInput,
+  IdCardInput,
 };

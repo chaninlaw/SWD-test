@@ -3,12 +3,6 @@
   margin: 0 auto;
 }
 
-@media (max-width: 600px) {
-  .container {
-    max-width: 600px;
-  }
-}
-
 .layout-heading {
   margin: 0 0 40px 0;
 }
@@ -60,15 +54,6 @@
   justify-items: center;
   margin: 50px 0;
   gap: 10px;
-}
-
-@media (max-width: 800px) {
-  .items {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-  }
 }
 
 .square,
@@ -136,4 +121,17 @@
 .move-position .tag {
   bottom: -15px;
   right: 40%;
+}
+
+@media (max-width: 800px) {
+  .container {
+    max-width: 600px;
+  }
+
+  .items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 }

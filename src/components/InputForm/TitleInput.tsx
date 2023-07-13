@@ -1,12 +1,17 @@
 import { Form, Select } from "antd";
+import { t } from "i18next";
 
-const TitleInput = () => {
+const TitleInput: React.FC = () => {
   return (
-    <Form.Item name="title" label="Title" rules={[{ required: true }]}>
-      <Select placeholder="title" allowClear>
-        <Select.Option value="male">Mr.</Select.Option>
-        <Select.Option value="female">Mrs.</Select.Option>
-        <Select.Option value="other">Miss</Select.Option>
+    <Form.Item
+      name={"title"}
+      label={t("title")}
+      rules={[{ required: true, message: `${t("title")} is required` }]}
+    >
+      <Select style={{ width: 80 }} placeholder={t("title")}>
+        <Select.Option value={"Mr."}>{t("mr")}</Select.Option>
+        <Select.Option value={"Mrs."}>{t("mrs")}</Select.Option>
+        <Select.Option value={"Miss"}>{t("miss")}</Select.Option>
       </Select>
     </Form.Item>
   );
