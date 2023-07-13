@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Table, Typography, Popconfirm, Form } from "antd";
+import { Table, Typography, Popconfirm, Form, Space } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { t } from "i18next";
 
@@ -20,14 +20,13 @@ export interface DataType {
 
 interface Props {
   dataSource: DataType[];
+  onDelete: () => void;
+  onEdit: () => void;
 }
 
-const TableForm: React.FC<Props> = ({ dataSource }) => {
+const TableForm: React.FC<Props> = ({ dataSource, onDelete, onEdit }) => {
   const [form] = Form.useForm();
   const [selectAlreadyRow, setSelectAlreadyRow] = useState<React.Key[]>([]);
-  const [editingKey, setEditingKey] = useState("");
-
-  const isEditing = (record: DataType) => record.key === editingKey;
 
   const columns: ColumnsType<DataType> = [
     {
@@ -64,34 +63,23 @@ const TableForm: React.FC<Props> = ({ dataSource }) => {
     {
       title: t("operation"),
       dataIndex: "operation",
-      render: (_: any, record: Item) => {
-        const editable = isEditing(record);
-        return editable ? (
-          <span>
-            <Typography.Link
-              onClick={() => save(record.key)}
-              style={{ marginRight: 8 }}
-            >
-              Save
+      render: (_, record) => {
+        return (
+          <Space direction="horizontal">
+            <Typography.Link onClick={() => onEdit(record)}>
+              Edit
             </Typography.Link>
-            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-              <a>Cancel</a>
-            </Popconfirm>
-          </span>
-        ) : (
-          <Typography.Link
-            disabled={editingKey !== ""}
-            onClick={() => edit(record)}
-          >
-            Edit
-          </Typography.Link>
+            <Typography.Link onClick={() => onDelete(record)}>
+              Delete
+            </Typography.Link>
+          </Space>
         );
       },
     },
   ];
 
   return (
-    <Form form={form} style={{ width: "90vw" }}>
+    <Form form={form} style={{ width: "95vw" }}>
       <Table
         columns={columns}
         dataSource={dataSource}
