@@ -14,9 +14,9 @@ const PhoneInput = () => {
     <Form.Item
       name="phoneNumber"
       label={t("phoneNumber")}
-      rules={[{ required: true }]}
+      rules={[{ required: true, message: t("phoneNumberIsRequired") }]}
     >
-      <Input addonBefore={prefixSelector} />
+      <Input addonBefore={prefixSelector} maxLength={9} />
     </Form.Item>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import TableForm, { DataType } from "../components/TableForm";
 import { Button, Form, Space, Typography } from "antd";
 import * as InputForm from "../components/InputForm";
@@ -34,19 +34,31 @@ const testData = [
   },
 ];
 
+const getLocalStorage = () => {
+  const submissions = localStorage.getItem("submissions");
+  if (submissions) {
+    return JSON.parse(submissions);
+  } else {
+    return [];
+  }
+};
+
 const FormPage: React.FC = () => {
-  const [submissions, setSubmissions] = useState<DataType[]>([...testData]);
+  const [submissions, setSubmissions] = useState<DataType[]>(getLocalStorage());
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    localStorage.setItem("submissions", JSON.stringify(submissions));
+  });
 
   const onFinish = (values: DataType) => {
     console.log(values);
-
     const submission = {
       ...values,
       key: Math.random(),
     };
     setSubmissions([...submissions, submission]);
-    // form.resetFields();
+    form.resetFields();
   };
 
   return (

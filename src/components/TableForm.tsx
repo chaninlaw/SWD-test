@@ -15,7 +15,7 @@ export interface DataType {
   phoneCode?: string;
   phoneNumber: string;
   passportId?: string;
-  salary?: number;
+  salary: number;
 }
 
 interface Props {
@@ -51,7 +51,7 @@ const TableForm: React.FC<Props> = ({ dataSource }) => {
       key: "phoneNumber",
       title: t("phoneNumber"),
       dataIndex: "phoneNumber",
-      sorter: (a, b) => a.phone.localeCompare(b.phone),
+      sorter: (a, b) => a.phoneNumber.localeCompare(b.phoneNumber),
       editable: true,
     },
     {

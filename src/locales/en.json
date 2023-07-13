@@ -12,9 +12,9 @@
   "mr": "Mr.",
   "mrs": "Mrs.",
   "miss": "Miss",
-  "firstName": "First Name",
-  "lastName": "Last Name",
-  "birthDate": "Birth Date",
+  "firstName": "Firstname",
+  "lastName": "Lastname",
+  "birthDate": "Date of birth",
   "selectDate": "Select Date",
   "nation": "Nationality",
   "option": "- - Option - -",
@@ -30,5 +30,12 @@
   "passportId": "Passport ID",
   "expectedSalary": "Expected Salary",
   "name": "Name",
-  "operation": "Operation"
+  "operation": "Operation",
+  "titleIsRequired": "Title is required",
+  "firstNameIsRequired": "Firstname is required",
+  "lastNameIsRequired": "Lastname is required",
+  "birthIsRequired": "Date of birth is required",
+  "nationalIsRequired": "Nationality is required",
+  "phoneNumberIsRequired": "Phone number is required",
+  "expectedSalaryIsRequired": "Expected salary is required"
 }

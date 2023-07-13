@@ -6,7 +6,7 @@ const LastNameInput: React.FC = () => {
     <Form.Item
       label={t("lastName")}
       name={"lastName"}
-      rules={[{ required: true }, { message: "Last name id required" }]}
+      rules={[{ required: true, message: t("lastNameIsRequired") }]}
       required
     >
       <Input />

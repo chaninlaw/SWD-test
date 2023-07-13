@@ -6,7 +6,7 @@ const TitleInput: React.FC = () => {
     <Form.Item
       name={"title"}
       label={t("title")}
-      rules={[{ required: true, message: `${t("title")} is required` }]}
+      rules={[{ required: true, message: t("titleIsRequired") }]}
     >
       <Select style={{ width: 80 }} placeholder={t("title")}>
         <Select.Option value={"Mr."}>{t("mr")}</Select.Option>

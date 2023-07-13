@@ -6,9 +6,13 @@ const SalaryInput = () => {
     <Form.Item
       name="salary"
       label={t("expectedSalary")}
-      rules={[{ required: true }]}
+      rules={[{ required: true, message: t("expectedSalaryIsRequired") }]}
     >
-      <InputNumber controls={false} max={99999999} />
+      <InputNumber
+        controls={false}
+        maxLength={8}
+        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+      />
     </Form.Item>
   );
 };
