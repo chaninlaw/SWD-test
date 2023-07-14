@@ -11,24 +11,22 @@ type Props = {
 
 const Navbar: React.FC<Props> = ({ onLang, lang, setLang }) => {
   return (
-    <>
-      <Space direction="horizontal">
-        <Select
-          value={lang}
-          onChange={(value) => setLang(value)}
-          onSelect={(value) => onLang(value)}
-          options={langs.map((lang) => ({
-            label: lang.shortName.toUpperCase(),
-            value: lang.shortName.toUpperCase(),
-          }))}
-        />
-      </Space>
+    <Space>
+      <Select
+        value={lang}
+        onChange={(value) => setLang(value)}
+        onSelect={(value) => onLang(value)}
+        options={langs.map((lang) => ({
+          label: lang.shortName.toUpperCase(),
+          value: lang.shortName.toUpperCase(),
+        }))}
+      />
       <Link to="/">
         <Button size="large" type="default">
           {t("homeButton")}
         </Button>
       </Link>
-    </>
+    </Space>
   );
 };
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Table, Typography, Popconfirm, Form, Space } from "antd";
+import { Table, Typography, Space, Checkbox, Button } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { t } from "i18next";
 
@@ -20,13 +20,13 @@ export interface DataType {
 
 interface Props {
   dataSource: DataType[];
-  onDelete: () => void;
-  onEdit: () => void;
+  onDelete: (record: DataType) => void;
+  onEdit: (record: DataType) => void;
 }
 
 const TableForm: React.FC<Props> = ({ dataSource, onDelete, onEdit }) => {
-  const [form] = Form.useForm();
   const [selectAlreadyRow, setSelectAlreadyRow] = useState<React.Key[]>([]);
+  const [selectAll, setSelectAll] = useState(false);
 
   const columns: ColumnsType<DataType> = [
     {
@@ -37,28 +37,24 @@ const TableForm: React.FC<Props> = ({ dataSource, onDelete, onEdit }) => {
         <Typography>{`${firstName} ${lastName}`}</Typography>
       ),
       sorter: (a, b) => a.firstName.localeCompare(b.firstName),
-      editable: true,
     },
     {
       key: "gender",
       title: t("gender"),
       dataIndex: "gender",
       sorter: (a, b) => a.gender.localeCompare(b.gender),
-      editable: true,
     },
     {
       key: "phoneNumber",
       title: t("phoneNumber"),
       dataIndex: "phoneNumber",
       sorter: (a, b) => a.phoneNumber.localeCompare(b.phoneNumber),
-      editable: true,
     },
     {
       key: "nation",
       title: t("nation"),
       dataIndex: "nation",
       sorter: (a, b) => a.nation.localeCompare(b.nation),
-      editable: true,
     },
     {
       title: t("operation"),
@@ -66,12 +62,10 @@ const TableForm: React.FC<Props> = ({ dataSource, onDelete, onEdit }) => {
       render: (_, record) => {
         return (
           <Space direction="horizontal">
-            <Typography.Link onClick={() => onEdit(record)}>
-              Edit
-            </Typography.Link>
-            <Typography.Link onClick={() => onDelete(record)}>
+            <Button onClick={() => onEdit(record)}>Edit</Button>
+            <Button danger onClick={() => onDelete(record)}>
               Delete
-            </Typography.Link>
+            </Button>
           </Space>
         );
       },
@@ -79,22 +73,44 @@ const TableForm: React.FC<Props> = ({ dataSource, onDelete, onEdit }) => {
   ];
 
   return (
-    <Form form={form} style={{ width: "95vw" }}>
+    <Space direction="vertical" style={{ columnGap: 20 }}>
+      <Space>
+        <Checkbox
+          checked={selectAll && true}
+          onChange={() => setSelectAll((prev) => !prev)}
+        >
+          {t("selectAll")}
+        </Checkbox>
+        <Button>{t("deleteAll")}</Button>
+      </Space>
       <Table
+        pagination={{
+          defaultPageSize: 10,
+          showSizeChanger: true,
+          pageSizeOptions: ["10", "20", "30"],
+        }}
         columns={columns}
         dataSource={dataSource}
         rowSelection={{
           type: "checkbox",
           selectedRowKeys: selectAlreadyRow,
           onChange: (key) => {
+            console.log(key);
+
             setSelectAlreadyRow(key);
           },
           onSelect: (record) => {
-            console.log({ record });
+            console.log(record);
+          },
+          onSelectAll: (selected, selectedRows, changeRows) => {
+            selected && setSelectAll(!selectAll);
+            selectAll && changeRows;
+            console.log(selected);
+            console.log(selectAll);
           },
         }}
       />
-    </Form>
+    </Space>
   );
 };
 
