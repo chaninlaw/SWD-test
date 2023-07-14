@@ -72,6 +72,32 @@ const FormPage: React.FC = () => {
     });
   };
 
+  const onDeleteSelected = (
+    records: React.Key[],
+    setSelectAll: (isSelect: boolean) => void
+  ) => {
+    console.log(records);
+
+    Modal.confirm({
+      title: "Delete the records",
+      content: (
+        <Typography>
+          <strong>Are you sure to delete {records.length} records?</strong>
+        </Typography>
+      ),
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
+      onOk: () => {
+        const updateSubmissions = submissions.filter(
+          (record) => !records.includes(record.key)
+        );
+        setSubmissions(updateSubmissions);
+        setSelectAll(false);
+      },
+    });
+  };
+
   return (
     <Space direction="vertical" style={{ width: "100vw" }}>
       <Typography.Title style={{ marginLeft: 30 }}>
@@ -121,6 +147,7 @@ const FormPage: React.FC = () => {
           dataSource={submissions}
           onDelete={onDelete}
           onEdit={onEdit}
+          onDeleteSelected={onDeleteSelected}
         />
         <Modal
           title={"Edit the record"}

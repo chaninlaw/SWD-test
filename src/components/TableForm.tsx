@@ -22,11 +22,20 @@ interface Props {
   dataSource: DataType[];
   onDelete: (record: DataType) => void;
   onEdit: (record: DataType) => void;
+  onDeleteSelected: (
+    record: React.Key[],
+    setSelectAll: (isSelect: boolean) => void
+  ) => void;
 }
 
-const TableForm: React.FC<Props> = ({ dataSource, onDelete, onEdit }) => {
+const TableForm: React.FC<Props> = ({
+  dataSource,
+  onDelete,
+  onEdit,
+  onDeleteSelected,
+}) => {
   const [selectAlreadyRow, setSelectAlreadyRow] = useState<React.Key[]>([]);
-  const [selectAll, setSelectAll] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   const columns: ColumnsType<DataType> = [
     {
@@ -72,16 +81,27 @@ const TableForm: React.FC<Props> = ({ dataSource, onDelete, onEdit }) => {
     },
   ];
 
+  const handleCheckboxChange = () => {
+    if (isChecked) {
+      setSelectAlreadyRow([]);
+      setIsChecked(false);
+    } else {
+      setSelectAlreadyRow([...dataSource.map((record) => record.key)]);
+      setIsChecked(true);
+    }
+  };
+
   return (
     <Space direction="vertical" style={{ columnGap: 20 }}>
       <Space>
-        <Checkbox
-          checked={selectAll && true}
-          onChange={() => setSelectAll((prev) => !prev)}
-        >
+        <Checkbox checked={isChecked} onChange={handleCheckboxChange}>
           {t("selectAll")}
         </Checkbox>
-        <Button>{t("deleteAll")}</Button>
+        <Button
+          onClick={() => onDeleteSelected(selectAlreadyRow, setIsChecked)}
+        >
+          {t("deleteAll")}
+        </Button>
       </Space>
       <Table
         pagination={{
@@ -95,18 +115,10 @@ const TableForm: React.FC<Props> = ({ dataSource, onDelete, onEdit }) => {
           type: "checkbox",
           selectedRowKeys: selectAlreadyRow,
           onChange: (key) => {
-            console.log(key);
-
             setSelectAlreadyRow(key);
           },
-          onSelect: (record) => {
-            console.log(record);
-          },
-          onSelectAll: (selected, selectedRows, changeRows) => {
-            selected && setSelectAll(!selectAll);
-            selectAll && changeRows;
-            console.log(selected);
-            console.log(selectAll);
+          onSelectAll: (selected) => {
+            setIsChecked(selected);
           },
         }}
       />
