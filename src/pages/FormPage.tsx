@@ -4,6 +4,7 @@ import TableForm, { DataType } from "../components/TableForm";
 import { Button, Form, Input, Modal, Space, Typography } from "antd";
 import * as InputForm from "../components/InputForm";
 import { t } from "i18next";
+// import ModalEditor from "../components/ModalEditor";
 
 const getLocalStorage = () => {
   const submissions = localStorage.getItem("submissions");
@@ -25,7 +26,6 @@ const FormPage: React.FC = () => {
   });
 
   const onFinish = (values: DataType) => {
-    console.log(values);
     const submission = {
       ...values,
       key: uuidv4(),
@@ -50,14 +50,14 @@ const FormPage: React.FC = () => {
 
   const onDelete = (record: DataType) => {
     Modal.confirm({
-      title: "Delete the record",
+      title: t("deleteRecord"),
       content: (
         <Typography>
-          Name: {record.firstName} {record.lastName} <br />
-          Gender: {record.gender} <br />
-          Phone Number: {record.phoneNumber} <br />
-          Nationality: {record.nation} <br />
-          <strong>Are you sure to delete this record?</strong>
+          {t("name")}: {record.firstName} {record.lastName} <br />
+          {t("gender")}: {record.gender} <br />
+          {t("phoneNumber")}: {record.phoneNumber} <br />
+          {t("nation")}: {record.nation} <br />
+          <strong>{t("deleteConfirm")}</strong>
         </Typography>
       ),
       okText: "Yes",
@@ -76,26 +76,27 @@ const FormPage: React.FC = () => {
     records: React.Key[],
     setSelectAll: (isSelect: boolean) => void
   ) => {
-    console.log(records);
-
-    Modal.confirm({
-      title: "Delete the records",
-      content: (
-        <Typography>
-          <strong>Are you sure to delete {records.length} records?</strong>
-        </Typography>
-      ),
-      okText: "Yes",
-      okType: "danger",
-      cancelText: "No",
-      onOk: () => {
-        const updateSubmissions = submissions.filter(
-          (record) => !records.includes(record.key)
-        );
-        setSubmissions(updateSubmissions);
-        setSelectAll(false);
-      },
-    });
+    records.length &&
+      Modal.confirm({
+        title: t("deleteRecord"),
+        content: (
+          <Typography>
+            <strong>
+              {t("preDeleteConfirm")} {records.length} {t("records")}?
+            </strong>
+          </Typography>
+        ),
+        okText: t("yes"),
+        okType: "danger",
+        cancelText: t("no"),
+        onOk: () => {
+          const updateSubmissions = submissions.filter(
+            (record) => !records.includes(record.key)
+          );
+          setSubmissions(updateSubmissions);
+          setSelectAll(false);
+        },
+      });
   };
 
   return (
@@ -149,11 +150,17 @@ const FormPage: React.FC = () => {
           onEdit={onEdit}
           onDeleteSelected={onDeleteSelected}
         />
+        {/* <ModalEditor
+          isEditing={isEditing}
+          editingRecord={editingRecord}
+          resetEditing={resetEditing}
+        /> */}
         <Modal
-          title={"Edit the record"}
+          title={t("editTitle")}
           open={isEditing}
-          okText={"Save"}
+          okText={t("save")}
           onCancel={resetEditing}
+          cancelText={t("cancel")}
           onOk={() => {
             setSubmissions((prev) => {
               return prev.map((record) => {

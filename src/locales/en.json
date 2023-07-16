@@ -37,5 +37,17 @@
   "birthIsRequired": "Date of birth is required",
   "nationalIsRequired": "Nationality is required",
   "phoneNumberIsRequired": "Phone number is required",
-  "expectedSalaryIsRequired": "Expected salary is required"
+  "expectedSalaryIsRequired": "Expected salary is required",
+  "deleteRecord": "Delete the record",
+  "deleteConfirm": "Are you sure to delete this record?",
+  "selectAll": "Select All",
+  "delete": "Delete",
+  "edit": "Edit",
+  "editTitle": "Edit the record",
+  "save": "Save",
+  "cancel": "Cancel",
+  "yes": "Yes",
+  "no": "No",
+  "records": "records",
+  "preDeleteConfirm": "Are you sure to delete"
 }

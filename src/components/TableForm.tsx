@@ -71,9 +71,9 @@ const TableForm: React.FC<Props> = ({
       render: (_, record) => {
         return (
           <Space direction="horizontal">
-            <Button onClick={() => onEdit(record)}>Edit</Button>
+            <Button onClick={() => onEdit(record)}>{t("edit")}</Button>
             <Button danger onClick={() => onDelete(record)}>
-              Delete
+              {t("delete")}
             </Button>
           </Space>
         );
@@ -92,7 +92,7 @@ const TableForm: React.FC<Props> = ({
   };
 
   return (
-    <Space direction="vertical" style={{ columnGap: 20 }}>
+    <Space direction="vertical" style={{ columnGap: 20, width: "90vw" }}>
       <Space>
         <Checkbox checked={isChecked} onChange={handleCheckboxChange}>
           {t("selectAll")}
@@ -100,14 +100,13 @@ const TableForm: React.FC<Props> = ({
         <Button
           onClick={() => onDeleteSelected(selectAlreadyRow, setIsChecked)}
         >
-          {t("deleteAll")}
+          {t("delete")}
         </Button>
       </Space>
       <Table
         pagination={{
           defaultPageSize: 10,
           showSizeChanger: true,
-          pageSizeOptions: ["10", "20", "30"],
         }}
         columns={columns}
         dataSource={dataSource}

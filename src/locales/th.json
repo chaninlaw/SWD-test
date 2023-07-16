@@ -37,5 +37,17 @@
   "birthIsRequired": "จำเป็นต้องกรอกวันเดือนปีเกิด",
   "nationalIsRequired": "จำเป็นต้องกรอกสัญชาติ",
   "phoneNumberIsRequired": "จำเป็นต้องกรอกหมายเลขโทรศัพท์มือถือ",
-  "expectedSalaryIsRequired": "จำเป็นต้องกรอกเงินเดือนที่คาดหวัง"
+  "expectedSalaryIsRequired": "จำเป็นต้องกรอกเงินเดือนที่คาดหวัง",
+  "deleteRecord": "รายการข้อมูลที่จะลบ",
+  "deleteConfirm": "คุณต้องการลบรายการข้อมูลที่แสดงหรือไม่?",
+  "selectAll": "เลือกทั้งหมด",
+  "delete": "ลบข้อมูล",
+  "edit": "แก้ไข",
+  "editTitle": "แก้ไขข้อมูลรายการ",
+  "save": "บันทึก",
+  "cancel": "ยกเลิก",
+  "yes": "ใช่",
+  "no": "ไม่",
+  "records": "รายการ",
+  "preDeleteConfirm": "คุณแน่ใจหรือไม่ที่จะลบรายการทั้งหมด"
 }
