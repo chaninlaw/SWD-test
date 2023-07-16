@@ -1,19 +1,10 @@
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import TableForm, { DataType } from "../components/TableForm";
 import { Button, Form, Input, Modal, Space, Typography } from "antd";
 import * as InputForm from "../components/InputForm";
 import { t } from "i18next";
-// import ModalEditor from "../components/ModalEditor";
-
-const getLocalStorage = () => {
-  const submissions = localStorage.getItem("submissions");
-  if (submissions) {
-    return JSON.parse(submissions);
-  } else {
-    return [];
-  }
-};
+import { getLocalStorage } from "../localStorage";
 
 const FormPage: React.FC = () => {
   const [form] = Form.useForm();
@@ -177,7 +168,7 @@ const FormPage: React.FC = () => {
           <Form.Item label={t("firstName")}>
             <Input
               value={editingRecord?.firstName}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setEditingRecord(
                   (prev) => prev && { ...prev, firstName: e.target.value }
                 )
@@ -187,7 +178,7 @@ const FormPage: React.FC = () => {
           <Form.Item label={t("lastName")}>
             <Input
               value={editingRecord?.lastName}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setEditingRecord(
                   (prev) => prev && { ...prev, lastName: e.target.value }
                 )
@@ -197,7 +188,7 @@ const FormPage: React.FC = () => {
           <Form.Item label={t("gender")}>
             <Input
               value={editingRecord?.gender}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setEditingRecord(
                   (prev) => prev && { ...prev, gender: e.target.value }
                 )
@@ -208,7 +199,7 @@ const FormPage: React.FC = () => {
             <Input
               max={9}
               value={String(editingRecord?.phoneNumber)}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setEditingRecord(
                   (prev) =>
                     prev && { ...prev, phoneNumber: String(e.target.value) }
@@ -220,7 +211,7 @@ const FormPage: React.FC = () => {
           <Form.Item label={t("nation")}>
             <Input
               value={editingRecord?.nation}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setEditingRecord(
                   (prev) => prev && { ...prev, nation: e.target.value }
                 )

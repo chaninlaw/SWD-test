@@ -2,7 +2,7 @@ import { Card, Space } from "antd";
 import { Link } from "react-router-dom";
 import { t } from "i18next";
 
-const style = {
+const styles = {
   card: {
     width: 300,
     cursor: "pointer",
@@ -21,18 +21,18 @@ const style = {
 
 const Home: React.FC = () => {
   return (
-    <Space style={style.container}>
-      <Link to="/layout" style={style.link}>
-        <Card title={t("test1")} bordered={false} style={style.card}>
+    <Space style={styles.container}>
+      <Link to="/layout" style={styles.link}>
+        <Card title={t("test1")} bordered={false} style={styles.card}>
           <p>{t("layoutAndStyle")}</p>
         </Card>
       </Link>
-      <Link to="/form" style={style.link}>
+      <Link to="/form" style={styles.link}>
         <Card
           className="card-home"
           title={t("test2")}
           bordered={false}
-          style={style.card}
+          style={styles.card}
         >
           <p>{t("formAndTable")}</p>
         </Card>
