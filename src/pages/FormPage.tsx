@@ -11,16 +11,17 @@ import {
   addSubmission,
   removeSubmission,
   removeMultiSubmissions,
+  editSubmission,
 } from "../store/slices/submisstionsSlice";
+import { setEditingRecord, resetEditing } from "../store/slices/editingSlice";
 import { RootState } from "../store";
 
 const FormPage: React.FC = () => {
   const [form] = Form.useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const [editingRecord, setEditingRecord] = useState<DataType | null>();
-
   const submissions = useSelector((state: RootState) => state.submissions);
+  const editingRecord = useSelector((state: RootState) => state.editing);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,16 +37,16 @@ const FormPage: React.FC = () => {
     form.resetFields();
   };
 
-  const resetEditing = () => {
+  const resetEditingModal = () => {
     setIsModalVisible(false);
-    setEditingRecord(null);
+    dispatch(resetEditing());
   };
 
   const onEdit = (record: DataType) => {
     setIsModalVisible(true);
     submissions.map((submission) => {
       if (submission.key === record.key) {
-        setEditingRecord(record);
+        dispatch(setEditingRecord(record));
       }
     });
   };
@@ -141,36 +142,31 @@ const FormPage: React.FC = () => {
         </Form>
 
         <TableForm
-          dataSource={submissions}
           onDelete={onDelete}
           onEdit={onEdit}
           onDeleteSelected={onDeleteSelected}
         />
+
         <Modal
           title={t("editTitle")}
           open={isModalVisible}
           okText={t("save")}
-          onCancel={resetEditing}
+          onCancel={resetEditingModal}
           cancelText={t("cancel")}
           onOk={() => {
-            setSubmissions((prev) => {
-              return prev.map((record) => {
-                if (editingRecord && record.key === editingRecord.key) {
-                  return editingRecord;
-                } else {
-                  return record;
-                }
-              });
-            });
-            resetEditing();
+            dispatch(editSubmission(editingRecord));
+            resetEditingModal();
           }}
         >
           <Form.Item label={t("firstName")}>
             <Input
               value={editingRecord?.firstName}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setEditingRecord(
-                  (prev) => prev && { ...prev, firstName: e.target.value }
+                dispatch(
+                  setEditingRecord({
+                    ...editingRecord,
+                    firstName: e.target.value,
+                  })
                 )
               }
             />
@@ -179,8 +175,11 @@ const FormPage: React.FC = () => {
             <Input
               value={editingRecord?.lastName}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setEditingRecord(
-                  (prev) => prev && { ...prev, lastName: e.target.value }
+                dispatch(
+                  setEditingRecord({
+                    ...editingRecord,
+                    lastName: e.target.value,
+                  })
                 )
               }
             />
@@ -189,8 +188,8 @@ const FormPage: React.FC = () => {
             <Input
               value={editingRecord?.gender}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setEditingRecord(
-                  (prev) => prev && { ...prev, gender: e.target.value }
+                dispatch(
+                  setEditingRecord({ ...editingRecord, gender: e.target.value })
                 )
               }
             />
@@ -200,9 +199,11 @@ const FormPage: React.FC = () => {
               max={9}
               value={String(editingRecord?.phoneNumber)}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setEditingRecord(
-                  (prev) =>
-                    prev && { ...prev, phoneNumber: String(e.target.value) }
+                dispatch(
+                  setEditingRecord({
+                    ...editingRecord,
+                    phoneNumber: e.target.value,
+                  })
                 );
               }}
               maxLength={9}
@@ -212,8 +213,11 @@ const FormPage: React.FC = () => {
             <Input
               value={editingRecord?.nation}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setEditingRecord(
-                  (prev) => prev && { ...prev, nation: e.target.value }
+                dispatch(
+                  setEditingRecord({
+                    ...editingRecord,
+                    nation: e.target.value,
+                  })
                 )
               }
             />

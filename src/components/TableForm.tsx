@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Table, Typography, Space, Checkbox, Button } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { t } from "i18next";
-import { DataType } from "../store/slices/submissionsSlice";
+import { DataType } from "../store/slices/submisstionsSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 interface Props {
-  dataSource: DataType[];
   onDelete: (record: DataType) => void;
   onEdit: (record: DataType) => void;
   onDeleteSelected: (
@@ -14,12 +15,8 @@ interface Props {
   ) => void;
 }
 
-const TableForm: React.FC<Props> = ({
-  dataSource,
-  onDelete,
-  onEdit,
-  onDeleteSelected,
-}) => {
+const TableForm: React.FC<Props> = ({ onDelete, onEdit, onDeleteSelected }) => {
+  const submissions = useSelector((state: RootState) => state.submissions);
   const [selectAlreadyRow, setSelectAlreadyRow] = useState<React.Key[]>([]);
   const [isChecked, setIsChecked] = useState(false);
 
@@ -72,7 +69,7 @@ const TableForm: React.FC<Props> = ({
       setSelectAlreadyRow([]);
       setIsChecked(false);
     } else {
-      setSelectAlreadyRow([...dataSource.map((record) => record.key)]);
+      setSelectAlreadyRow([...submissions.map((record) => record.key)]);
       setIsChecked(true);
     }
   };
@@ -95,7 +92,7 @@ const TableForm: React.FC<Props> = ({
           showSizeChanger: true,
         }}
         columns={columns}
-        dataSource={dataSource}
+        dataSource={submissions}
         rowSelection={{
           type: "checkbox",
           selectedRowKeys: selectAlreadyRow,

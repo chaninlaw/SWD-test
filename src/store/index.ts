@@ -1,10 +1,12 @@
 // store.js
 import { configureStore } from "@reduxjs/toolkit";
 import submissionsReducer from "./slices/submisstionsSlice";
+import editingRedecer from "./slices/editingSlice";
 
 const store = configureStore({
   reducer: {
     submissions: submissionsReducer,
+    editing: editingRedecer,
   },
 });
 

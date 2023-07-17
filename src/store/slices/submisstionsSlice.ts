@@ -20,7 +20,7 @@ const initialState: DataType[] = getLocalStorage();
 
 const submissionsSlice = createSlice({
   name: "submissions",
-  initialState: initialState,
+  initialState,
   reducers: {
     addSubmission: (state, action) => {
       state.push(action.payload);
@@ -36,9 +36,20 @@ const submissionsSlice = createSlice({
       const keys = action.payload;
       return state.filter((submission) => !keys.includes(submission.key));
     },
+    editSubmission: (state, action) => {
+      const updatedSubmission = action.payload;
+      const index = state.findIndex((s) => s.key === updatedSubmission.key);
+      if (index !== -1) {
+        state[index] = updatedSubmission;
+      }
+    },
   },
 });
 
-export const { addSubmission, removeSubmission, removeMultiSubmissions } =
-  submissionsSlice.actions;
+export const {
+  addSubmission,
+  removeSubmission,
+  removeMultiSubmissions,
+  editSubmission,
+} = submissionsSlice.actions;
 export default submissionsSlice.reducer;
