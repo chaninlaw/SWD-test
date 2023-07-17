@@ -22,5 +22,5 @@
 2. สร้าง SPA (single page application) ด้วย Ant Design เก็บข้อมูลบุคคล (ตามไฟล์ภาพ) โดย
 
 - [x] จัดการข้อมูลทั้ง Create, Edit และ Delete ลงบน Local Storage (เมื่อ Refesh หน้าเว็บไซต์ข้อมูลต้องไม่หายไป)
-- [ ] ใช้ Redux-toolkit จัดการข้อมูลของฟอร์ม แทน useState
+- [x] ใช้ Redux-toolkit จัดการข้อมูลของฟอร์ม แทน useState
 - [x] ตารางต้องมี Pagination, sorting และสามารถเลือกลบตามแต่ละรายการได้
