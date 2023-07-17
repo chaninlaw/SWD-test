@@ -2,21 +2,7 @@ import { useState } from "react";
 import { Table, Typography, Space, Checkbox, Button } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { t } from "i18next";
-
-export interface DataType {
-  key: React.Key;
-  title: string;
-  firstName: string;
-  lastName: string;
-  birth?: string;
-  nation: string;
-  idCard?: string;
-  gender: string;
-  phoneCode?: string;
-  phoneNumber: string;
-  passportId?: string;
-  salary: number;
-}
+import { DataType } from "../store/slices/submissionsSlice";
 
 interface Props {
   dataSource: DataType[];

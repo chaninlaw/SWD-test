@@ -1,16 +1,27 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import TableForm, { DataType } from "../components/TableForm";
+import TableForm from "../components/TableForm";
 import { Button, Form, Input, Modal, Space, Typography } from "antd";
 import * as InputForm from "../components/InputForm";
 import { t } from "i18next";
-import { getLocalStorage } from "../localStorage";
+import type { DataType } from "../store/slices/submisstionsSlice";
+
+import { useSelector, useDispatch } from "react-redux";
+import {
+  addSubmission,
+  removeSubmission,
+  removeMultiSubmissions,
+} from "../store/slices/submisstionsSlice";
+import { RootState } from "../store";
 
 const FormPage: React.FC = () => {
   const [form] = Form.useForm();
-  const [submissions, setSubmissions] = useState<DataType[]>(getLocalStorage());
-  const [isEditing, setIsEditing] = useState(false);
-  const [editingRecord, setEditingRecord] = useState<DataType | null>(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const [editingRecord, setEditingRecord] = useState<DataType | null>();
+
+  const submissions = useSelector((state: RootState) => state.submissions);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     localStorage.setItem("submissions", JSON.stringify(submissions));
@@ -19,19 +30,19 @@ const FormPage: React.FC = () => {
   const onFinish = (values: DataType) => {
     const submission = {
       ...values,
-      key: uuidv4(),
+      key: uuidv4() as React.Key,
     };
-    setSubmissions([...submissions, submission]);
+    dispatch(addSubmission(submission));
     form.resetFields();
   };
 
   const resetEditing = () => {
-    setIsEditing(false);
+    setIsModalVisible(false);
     setEditingRecord(null);
   };
 
   const onEdit = (record: DataType) => {
-    setIsEditing(true);
+    setIsModalVisible(true);
     submissions.map((submission) => {
       if (submission.key === record.key) {
         setEditingRecord(record);
@@ -55,10 +66,7 @@ const FormPage: React.FC = () => {
       okType: "danger",
       cancelText: "No",
       onOk: () => {
-        const updateSubmissions = submissions.filter(
-          (submission) => submission.key !== record.key
-        );
-        setSubmissions(updateSubmissions);
+        dispatch(removeSubmission(record));
       },
     });
   };
@@ -81,10 +89,7 @@ const FormPage: React.FC = () => {
         okType: "danger",
         cancelText: t("no"),
         onOk: () => {
-          const updateSubmissions = submissions.filter(
-            (record) => !records.includes(record.key)
-          );
-          setSubmissions(updateSubmissions);
+          dispatch(removeMultiSubmissions(records));
           setSelectAll(false);
         },
       });
@@ -141,14 +146,9 @@ const FormPage: React.FC = () => {
           onEdit={onEdit}
           onDeleteSelected={onDeleteSelected}
         />
-        {/* <ModalEditor
-          isEditing={isEditing}
-          editingRecord={editingRecord}
-          resetEditing={resetEditing}
-        /> */}
         <Modal
           title={t("editTitle")}
-          open={isEditing}
+          open={isModalVisible}
           okText={t("save")}
           onCancel={resetEditing}
           cancelText={t("cancel")}
